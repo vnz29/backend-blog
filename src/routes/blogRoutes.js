@@ -1,11 +1,13 @@
 import express from 'express';
-import { createBlog, findAllBlogs, findSpecificBlogs, updateBlog } from '../controllers/blogController.js';
+import { createBlog, deleteBlog, findAllBlogs, findSpecificBlogs, updateBlog } from '../controllers/blogController.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-router.get("/api/blog", findAllBlogs)
-router.post("/api/blog", createBlog)
-router.patch("/api/blog/:id", updateBlog)
+router.get("/",requireAuth,findAllBlogs)
+router.post("/", createBlog)
+router.patch("/:id", updateBlog)
+router.delete("/:id",deleteBlog)
 
-router.get("/api/blog/search", findSpecificBlogs)
+router.get("/search", findSpecificBlogs)
 
 export default router 

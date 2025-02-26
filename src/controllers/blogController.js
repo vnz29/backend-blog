@@ -76,3 +76,16 @@ export const createBlog = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
   };
+
+  export const deleteBlog = async (req, res) => {
+    console.log(req.params.id)
+    try {
+      const item = await Blog.findByIdAndDelete(req.params.id);
+      if (!item) {
+        return res.status(404).send('Item not found');
+      }
+      res.status(200).send(`Deleted item: ${item}`);
+    } catch (error) {
+      res.status(500).send('Error deleting item');
+    }
+ };
